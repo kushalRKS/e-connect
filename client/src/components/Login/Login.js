@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import useStyles from './styles'
-
 import {
   Container,
   Paper,
@@ -14,7 +13,9 @@ import {
   FormControlLabel,
   FormLabel,
 } from '../materialComponents.js'
+import axios from 'axios'
 
+const API_URL = 'http://localhost:5000/users'
 // import Container from '@material-ui/core/Container'
 // import Paper from '@material-ui/core/Paper'
 // import TextField from '@material-ui/core/TextField'
@@ -29,15 +30,21 @@ const Login = () => {
     password: '',
   })
 
+  const login = async (url, _data) => {
+    const { data } = await axios.post(url, _data)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(fromData)
+
+    login(`http://localhost:5000/users/login`, fromData)
   }
 
   const clear = () => {
     setFormData({
       email: '',
       password: '',
+      confirmPassword: '',
     })
   }
   return (
@@ -70,7 +77,6 @@ const Login = () => {
               setFormData({ ...fromData, password: e.target.value })
             }}
           />
-
           <Button variant='contained' color='primary' type='submit' fullWidth>
             Login
           </Button>
@@ -88,12 +94,17 @@ const Register = () => {
     email: '',
     password: '',
     gender: '',
-    confirmedPssword: '',
+    confirmPassword: '',
   })
+
+  const register = async (url, _data) => {
+    const res = await axios.post(url, _data)
+    console.log(res.data)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(fromData)
+    register(`http://localhost:5000/users/register`, fromData)
   }
 
   const clear = () => {
@@ -102,7 +113,7 @@ const Register = () => {
       lastanme: '',
       email: '',
       password: '',
-      confirmedPssword: '',
+      confirmPassword: '',
     })
   }
   return (
@@ -165,7 +176,7 @@ const Register = () => {
             type='password'
             variant='outlined'
             onChange={(e) => {
-              setFormData({ ...fromData, confirmedPssword: e.target.value })
+              setFormData({ ...fromData, confirmPassword: e.target.value })
             }}
           />
 

@@ -4,7 +4,7 @@ const userSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
   address: String,
-  passWord: String,
+  password: String,
   confirmPassword: String,
   college: String,
   email: String,
@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
   followes: Array,
   followes: Array,
   joinedOn: Date,
+  lastLogin: Date,
 })
 
 const Users = mongoose.model('users', userSchema)
